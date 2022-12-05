@@ -8,7 +8,7 @@ const year = document.querySelector('.year');
 const day = document.querySelector('.day');
 
 // 일
-const thisDate = new Date().getDate();;
+const thisDate = new Date().getDate();
 // console.log(date)
 date.append(thisDate);
 
@@ -41,10 +41,32 @@ const todoList = document.querySelector('.list_box') // 텍스트 박스 영역
 const checkList = document.querySelector('.check_box') // 체크 박스 영역
 const allTodo = document.querySelector('.todo_list') // 전체 리스트 박스
 
-
-// 버튼을 클릭하는 이벤트가 발생이 되면 input의 내용이 list에 저장
+// 새로고침해도 리스트 마음 속에 저! 장! 찡긋
 let todoArr = [];
 
+const storageItems = JSON.parse(localStorage.getItem("todoItems"));
+console.log(storageItems)
+
+if (storageItems) {
+  storageItems.forEach((e) => {
+    console.log(e);
+    todoArr.push(e); // 새로운 요소 계속 넣어줘서 새로고침을 계속해도 유지
+    const newList = document.createElement('li');
+    newList.textContent = e;
+    todoList.append(newList);
+
+    const newCheck = document.createElement('input');
+    newCheck.type = "checkbox";
+    checkList.append(newCheck);
+  });
+}
+
+// 날짜가 바뀌면 로컬스토리지 내용까지 모두 클리어
+date.addEventListener('change', (event) => {
+  localStorage.clear(todoArr)
+})
+
+// 버튼을 클릭하는 이벤트가 발생이 되면 input의 내용이 list에 저장
 addBtn.addEventListener('click', (event) => {
   event.preventDefault();
   const check = document.createElement('input');
@@ -57,7 +79,7 @@ addBtn.addEventListener('click', (event) => {
   else {
     list.textContent = inputBox.value;
     todoList.append(list);
-    checkList.append(check)
+    checkList.append(check);
     inputBox.value = '';
   }
   
