@@ -58,6 +58,14 @@ if (storageItems) {
     const newCheck = document.createElement('input');
     newCheck.type = "checkbox";
     checkList.append(newCheck);
+
+    newCheck.addEventListener('click', (event) => {
+      newList.style.textDecoration = 'line-through';
+    })
+    newList.addEventListener('dblclick', (event) => {
+      todoList.removeChild(newList);
+      checkList.removeChild(newCheck);
+    })
   });
 }
 
